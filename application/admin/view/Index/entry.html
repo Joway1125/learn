@@ -37,16 +37,14 @@
 </div>
 {/block}
 {block name='script'}
-<script type="text/template" id="html_template">
-    <input type='test' value=''>
-</script>
 <script>
     $(document).ready(function() {
         $('input[type=radio][name=status]').change(function() {
             if (this.value == '4') {
-                var html = document.getElementById('html_template').innerHTML;
+                var str = "<input type='text' value=''>";
+                document.getElementById('other').innerHTML += str;
             } else {
-
+                
             }
         });
     });
