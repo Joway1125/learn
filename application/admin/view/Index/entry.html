@@ -1,4 +1,7 @@
 {extend name="base" /}
+{block name="css"}
+<link rel="stylesheet" href="/webuploader/css/webuploader.css">
+{/block}
 {block name="main"}
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -15,21 +18,143 @@
     <!-- Main content -->
     <section class="content container-fluid">
         <div class="box-body">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">押车类型</label>
-                <div class="col-sm-4">
-                    <label><input name="Fruit" type="radio" value="" />质押 </label>
+            <div class="form-group" style="padding: 20px">
+                <label class="col-sm-1 control-label">押车类型：</label>
+                <div class="col-sm-11">
+                    <label><input name="Fruit" type="radio" value=""  checked="checked"/>质押 </label>
                     <label><input name="Fruit" type="radio" value="" />抵押 </label>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">车辆状态</label>
-                <div class="col-sm-4">
-                    <label><input name="status" type="radio" value="1" />在押 </label>
-                    <label><input name="status" type="radio" value="2" />已赎 </label>
-                    <label><input name="status" type="radio" value="3" />已卖 </label>
-                    <label><input name="status" type="radio" value="4" />其他 </label>
-                    <label id="other"></label>
+            <h3 style="text-align: left"><font color="blue"> 借款人信息</font></h3>
+            <div class="form-group" style="padding: 20px">
+                <label class="col-sm-1 control-label">所属分部：</label>
+                <div class="col-sm-1">
+                    <select class="form-control">
+                        <option>全部</option>
+                        <option>天津</option>
+                        <option>呼和浩特</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label">借款人姓名：</label>
+                <div class="col-sm-2">
+                    <input type="email" class="form-control" id="inputEmail3" placeholder="请输入借款人姓名">
+                </div>
+                <label  class="col-sm-1 control-label" style="text-align: right">姓名备注：</label>
+                <div class="col-sm-2">
+                <input type="email" class="form-control" placeholder="是否为车主">
+                </div>
+            </div>
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label">身份证号：</label>
+                <div class="col-sm-2">
+                    <input type="email" class="form-control" placeholder="请输入身份证号">
+                </div>
+                <label  class="col-sm-1 control-label" style="text-align: right">手机号：</label>
+                <div class="col-sm-2">
+                    <input type="email" class="form-control" placeholder="请输入手机号">
+                </div>
+            </div>
+            <h3 style="text-align: left;padding:40px 0"><font color="blue">车辆信息</font></h3>
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label">车辆型号：</label>
+                <div class="col-sm-2">
+                    <input type="email" class="form-control" placeholder="请输入车辆型号">
+                </div>
+                <label  class="col-sm-1 control-label" style="text-align: right">车辆备注：</label>
+                <div class="col-sm-2">
+                    <input type="email" class="form-control" placeholder="是否有大本、为二押等情况">
+                </div>
+
+            </div>
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label">车牌号：</label>
+                <div class="col-sm-2">
+                    <input type="email" class="form-control" placeholder="请输入车牌号">
+                </div>
+                <label  class="col-sm-1 control-label" style="text-align: right">上牌日期：</label>
+                <div class="col-sm-2">
+                    <input type="email" class="form-control" placeholder="请输入车辆备注">
+                </div>
+            </div>
+            <h3 style="text-align: left;padding:40px 0"><font color="blue">借款信息</font></h3>
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label" >收款人：</label>
+                <div class="col-sm-2">
+                    <input type="email" class="form-control" placeholder="默认同步借款人姓名">
+                </div>
+                <label  class="col-sm-1 control-label" style="text-align: right">借款金额：</label>
+                <div class="col-sm-2">
+                    <input type="email" class="form-control" placeholder="请输入借款金额">
+                </div>
+            </div>
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label" >银行卡号：</label>
+                <div class="col-sm-2">
+                    <input type="email" class="form-control" placeholder="请输入银行卡号">
+                </div>
+                <label  class="col-sm-1 control-label" style="text-align: right">开户行：</label>
+                <div class="col-sm-2">
+                    <input type="email" class="form-control" placeholder="请输入开户行">
+                </div>
+            </div>
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label" >违章押金：</label>
+                <div class="col-sm-1">
+                    <input type="email" class="form-control" placeholder="违章押金">
+                </div>
+                <label  class="col-sm-1 control-label" style="text-align: right">其他押金：</label>
+                <div class="col-sm-1">
+                    <input type="email" class="form-control" placeholder="其他押金">
+                </div>
+                <label  class="col-sm-1 control-label" style="text-align: right">垫资金额：</label>
+                <div class="col-sm-1">
+                    <input type="email" class="form-control" placeholder="垫资金额">
+                </div>
+            </div>
+            <h3 style="text-align: left;padding:40px 0"><font color="blue">赎车信息</font></h3>
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label" >赎车本金：</label>
+                <div class="col-sm-2">
+                    <input type="email" class="form-control" placeholder="请输入赎车本金">
+                </div>
+                <label  class="col-sm-1 control-label" style="text-align: right">转账贴图：</label>
+                <div class="col-sm-8">
+                    <div id="uploader" class="wu-example">
+                        <div class="queueList">
+                            <div id="dndArea" class="placeholder">
+                                <div id="filePicker" class="webuploader-container"><div class="webuploader-pick">点击选择图片</div><div id="rt_rt_1c41e96huui1lqb1c2ghf31fd1" style="position: absolute; top: 0px; left: 448px; width: 168px; height: 44px; overflow: hidden; bottom: auto; right: auto;"><input type="file" name="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*"><label style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255);"></label></div></div>
+                                <p>或将照片拖到这里，单次最多可选300张</p>
+                            </div>
+                            <ul class="filelist"></ul></div>
+                            <div class="statusBar" style="display:none;">
+                                <div class="progress" style="display: none;">
+                                    <span class="text">0%</span>
+                                    <span class="percentage" style="width: 0%;"></span>
+                                </div><div class="info">共0张（0B），已上传0张</div>
+                                <div class="btns">
+                                    <div id="filePicker2" class="webuploader-container"><div class="webuploader-pick">继续添加</div><div id="rt_rt_1c41e96i211j91odq1kee17s4dvn6" style="position: absolute; top: 0px; left: 0px; width: 1px; height: 1px; overflow: hidden;"><input type="file" name="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*"><label style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255);"></label></div></div><div class="uploadBtn state-pedding">开始上传</div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <h3 style="text-align: left;padding:40px 0"><font color="blue">卖车信息</font></h3>
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label">卖车本金：</label>
+                <div class="col-sm-2">
+                    <input type="email" class="form-control" placeholder="请输入卖车本金">
+                </div>
+                <label  class="col-sm-1 control-label" style="text-align: right">卖车利润：</label>
+                <div class="col-sm-2">
+                    <input type="email" class="form-control" placeholder="请输入卖车利润">
+                </div>
+            </div>
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label">转账贴图：</label>
+                <div class="col-sm-2">
+                    <input type="email" class="form-control" placeholder="请输入卖车本金">
                 </div>
             </div>
         </div>
@@ -37,17 +162,34 @@
 </div>
 {/block}
 {block name='script'}
+<script type="text/javascript" src="/webuploader/src/webuploader.js"></script>
+<script type="text/javascript" src="/webuploader/test/jquery-1.10.1.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('input[type=radio][name=status]').change(function() {
-            if (this.value == '4') {
-//                var str = "<input type='text' value=''>";
-//                document.getElementById('other').innerHTML += str;
-                $("#other").after("<input type='text' value=''>");
-            } else {
-                $("#other").remove();
-            }
-        });
+    var uploader = WebUploader.create({
+
+        // swf文件路径
+        swf: BASE_URL + '/js/Uploader.swf',
+
+        // 文件接收服务端。
+        server: '',
+
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: '#picker',
+
+        // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+        resize: false
     });
+    //车辆状态
+//    $(document).ready(function() {
+//        $('input[type=radio][name=status]').change(function() {
+//            if (this.value == '4') {
+//                var str = "<input type='text' id='note' value='' placeholder='填写备注信息'>";
+//                document.getElementById('other').innerHTML += str;
+//            } else {
+//                $("#note").remove();
+//            }
+//        });
+//    });
 </script>
 {/block}
