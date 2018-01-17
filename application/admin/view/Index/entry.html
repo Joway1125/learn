@@ -29,7 +29,6 @@
                     <label><input name="status" type="radio" value="2" />已赎 </label>
                     <label><input name="status" type="radio" value="3" />已卖 </label>
                     <label><input name="status" type="radio" value="4" />其他 </label>
-                    <label id="other"></label>
                 </div>
             </div>
         </div>
@@ -41,10 +40,11 @@
     $(document).ready(function() {
         $('input[type=radio][name=status]').change(function() {
             if (this.value == '4') {
-                var str = "<input type='text' value=''>";
-                document.getElementById('other').innerHTML += str;
+//                var str = "<input type='text' value=''>";
+//                document.getElementById('other').innerHTML += str;
+                $("#other").after("<input type='text' value=''>");
             } else {
-                
+                $("#other").remove();
             }
         });
     });
