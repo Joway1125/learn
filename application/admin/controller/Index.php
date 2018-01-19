@@ -14,4 +14,8 @@ class Index extends Controller
 	public function entry(){
 	    return view();
     }
+
+    public function dataCount(){
+        return view();
+    }
 }
