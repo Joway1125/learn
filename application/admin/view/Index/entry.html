@@ -1,14 +1,12 @@
 {extend name="base" /}
 {block name="css"}
-<link href="/webuploader/webuploader.css" rel="stylesheet" type="text/css" />
 <link type="text/css" rel="stylesheet" href="video/css/main.css" />
 <script type="text/javascript" src="upload/jquery/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="upload/webuploader/webuploader.js"></script>
 <link href="upload/webuploader/webuploader.css" rel="stylesheet" />
-
-
 <script type="text/javascript" src="upload/cxuploader.js"></script>
 <link href="upload/cxuploader.css" rel="stylesheet" />
+<script type="text/javascript" src="date/css/bootstrap-datetimepicker.min.css"></script>
 <style type="text/css">
     .file{ width:78px; height:26px; position:relative; display:inline-block; background:#eb6100; border:1px solid #eb6100; font-size:12px; overflow:hidden; color:#fff; text-decoration:none; text-indent:0; line-height:26px; }
     .file input{ position:absolute; font-size:12px; right:0; top:0; opacity:0; }
@@ -60,115 +58,119 @@
         </ol>
     </section>
     <!-- Main content -->
-    <section class="content container-fluid">
+    <form class="content container-fluid" id="entryForm" enctype="multipart/form-data" method="post">
     <div class="box-body">
         <div class="form-group" style="padding: 20px">
             <label class="col-sm-1 control-label">押车类型：</label>
             <div class="col-sm-11">
-                <label><input name="Fruit" type="radio" value=""  checked="checked"/>质押 </label>
-                <label><input name="Fruit" type="radio" value="" />抵押 </label>
+                <label><input name="type" type="radio" value="1"  checked="checked"/>质押 </label>
+                <label><input name="type" type="radio" value="2" />抵押 </label>
             </div>
         </div>
         <h3 style="text-align: left"><font color="blue"> 借款人信息</font></h3>
         <div class="form-group" style="padding: 20px">
             <label class="col-sm-1 control-label">所属分部：</label>
             <div class="col-sm-1">
-                <select class="form-control">
+                <select class="form-control" name="address">
                     <option>全部</option>
-                    <option>天津</option>
-                    <option>呼和浩特</option>
+                    <option value="1">天津</option>
+                    <option value="2">呼和浩特</option>
                 </select>
             </div>
         </div>
         <div class="form-group" style="padding: 20px">
             <label  class="col-sm-1 control-label">借款人姓名：</label>
             <div class="col-sm-2">
-                <input type="email" class="form-control" id="inputEmail3" placeholder="请输入借款人姓名">
+                <input type="text" class="form-control" name="name" placeholder="请输入借款人姓名">
             </div>
             <label  class="col-sm-1 control-label" style="text-align: right">姓名备注：</label>
             <div class="col-sm-2">
-            <input type="email" class="form-control" placeholder="是否为车主">
+            <input type="text" name="note" class="form-control" placeholder="是否为车主">
             </div>
         </div>
         <div class="form-group" style="padding: 20px">
             <label  class="col-sm-1 control-label">身份证号：</label>
             <div class="col-sm-2">
-                <input type="email" class="form-control" placeholder="请输入身份证号">
+                <input type="text" name="cardID" class="form-control" placeholder="请输入身份证号">
             </div>
             <label  class="col-sm-1 control-label" style="text-align: right">手机号：</label>
             <div class="col-sm-2">
-                <input type="email" class="form-control" placeholder="请输入手机号">
+                <input type="text" name="tel" class="form-control" placeholder="请输入手机号">
             </div>
         </div>
         <h3 style="text-align: left;padding:40px 0"><font color="blue">车辆信息</font></h3>
         <div class="form-group" style="padding: 20px">
             <label  class="col-sm-1 control-label">车辆型号：</label>
             <div class="col-sm-2">
-                <input type="email" class="form-control" placeholder="请输入车辆型号">
+                <input type="text" name="modelNum" class="form-control" placeholder="请输入车辆型号">
             </div>
             <label  class="col-sm-1 control-label" style="text-align: right">车辆备注：</label>
             <div class="col-sm-2">
-                <input type="email" class="form-control" placeholder="是否有大本、为二押等情况">
+                <input type="text" name="carNote" class="form-control" placeholder="是否有大本、为二押等情况">
             </div>
 
         </div>
         <div class="form-group" style="padding: 20px">
             <label  class="col-sm-1 control-label">车牌号：</label>
             <div class="col-sm-2">
-                <input type="email" class="form-control" placeholder="请输入车牌号">
+                <input type="text" name="carNum" class="form-control" placeholder="请输入车牌号">
             </div>
             <label  class="col-sm-1 control-label" style="text-align: right">上牌日期：</label>
-            <div class="col-sm-2">
-                <input type="email" class="form-control" placeholder="请输入车辆备注">
+            <div class="col-sm-6">
+                    <div class="input-group date form_date col-md-5" >
+                        <input class="form-control" size="16" type="text" value="" readonly>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                    <input type="hidden" id="dtp_input2" value="" /><br/>
             </div>
         </div>
         <h3 style="text-align: left;padding:40px 0"><font color="blue">借款信息</font></h3>
         <div class="form-group" style="padding: 20px">
             <label  class="col-sm-1 control-label" >收款人：</label>
             <div class="col-sm-2">
-                <input type="email" class="form-control" placeholder="默认同步借款人姓名">
+                <input type="text" class="form-control" name="payeeName" placeholder="默认同步借款人姓名">
             </div>
             <label  class="col-sm-1 control-label" style="text-align: right">借款金额：</label>
             <div class="col-sm-2">
-                <input type="email" class="form-control" placeholder="请输入借款金额">
+                <input type="text" name="borrowMoney" class="form-control" placeholder="请输入借款金额">
             </div>
         </div>
         <div class="form-group" style="padding: 20px">
             <label  class="col-sm-1 control-label" >银行卡号：</label>
             <div class="col-sm-2">
-                <input type="email" class="form-control" placeholder="请输入银行卡号">
+                <input type="text" name="cardNum" class="form-control" placeholder="请输入银行卡号">
             </div>
             <label  class="col-sm-1 control-label" style="text-align: right">开户行：</label>
             <div class="col-sm-2">
-                <input type="email" class="form-control" placeholder="请输入开户行">
+                <input type="text" name="bankName" class="form-control" placeholder="请输入开户行">
             </div>
         </div>
         <div class="form-group" style="padding: 20px">
             <label  class="col-sm-1 control-label" >违章押金：</label>
             <div class="col-sm-1">
-                <input type="email" class="form-control" placeholder="违章押金">
+                <input type="text" name="illegal" class="form-control" placeholder="违章押金">
             </div>
             <label  class="col-sm-1 control-label" style="text-align: right">其他押金：</label>
             <div class="col-sm-1">
-                <input type="email" class="form-control" placeholder="其他押金">
+                <input type="text" name="other" class="form-control" placeholder="其他押金">
             </div>
             <label  class="col-sm-1 control-label" style="text-align: right">垫资金额：</label>
             <div class="col-sm-1">
-                <input type="email" class="form-control" placeholder="垫资金额">
+                <input type="text" name="mat"  class="form-control" placeholder="垫资金额">
             </div>
         </div>
         <h3 style="text-align: left;padding:40px 0"><font color="blue">赎车信息</font></h3>
         <div class="form-group" style="padding: 20px">
             <label  class="col-sm-1 control-label" >赎车本金：</label>
             <div class="col-sm-2">
-                <input type="email" class="form-control" placeholder="请输入赎车本金">
+                <input type="text" name="redeem" class="form-control" placeholder="请输入赎车本金">
             </div>
         </div>
         <div class="form-group" style="padding: 10px">
             <label  class="col-sm-1 control-label">转账贴图：</label>
             <div class="formControls col-sm-11">
                 <div class="uploder-container">
-                    <p>您可以使用截屏工具截屏后，在窗口ctrl+V粘贴来上传图片</p>
                     <div  class="cxuploder">
                         <div class="queueList">
                             <div class="placeholder">
@@ -191,18 +193,17 @@
         <div class="form-group" style="padding: 20px">
             <label  class="col-sm-1 control-label">卖车本金：</label>
             <div class="col-sm-2">
-                <input type="email" class="form-control" placeholder="请输入卖车本金">
+                <input type="text" name="sellMoney" class="form-control" placeholder="请输入卖车本金">
             </div>
             <label  class="col-sm-1 control-label" style="text-align: right">卖车利润：</label>
             <div class="col-sm-2">
-                <input type="email" class="form-control" placeholder="请输入卖车利润">
+                <input type="text" name="sellProfits" class="form-control" placeholder="请输入卖车利润">
             </div>
         </div>
         <div class="form-group" style="padding: 20px">
             <label  class="col-sm-1 control-label">转账贴图：</label>
             <div class="formControls col-sm-11">
                 <div class="uploder-container">
-                    <p>您可以使用截屏工具截屏后，在窗口ctrl+V粘贴来上传图片</p>
                     <div  class="cxuploder">
                         <div class="queueList">
                             <div class="placeholder">
@@ -230,7 +231,6 @@
         <label  class="col-sm-1 control-label">借款人身份证、银行卡、签约、人车合影照片：</label>
         <div class="formControls col-sm-11">
             <div class="uploder-container">
-                <p>您可以使用截屏工具截屏后，在窗口ctrl+V粘贴来上传图片</p>
                 <div  class="cxuploder">
                     <div class="queueList">
                         <div class="placeholder">
@@ -256,7 +256,6 @@
         <label  class="col-sm-1 control-label">车辆证件，查档照片，维修记录，违章查询，打款凭证：</label>
         <div class="formControls col-sm-11">
             <div class="uploder-container">
-                <p>您可以使用截屏工具截屏后，在窗口ctrl+V粘贴来上传图片</p>
                 <div  class="cxuploder">
                     <div class="queueList">
                         <div class="placeholder">
@@ -266,11 +265,8 @@
                     </div>
 
                     <div class="statusBar" style="display:none;">
-
-
                         <div class="btns">
                             <div  class="jxfilePicker"></div>
-
                         </div>
                         <div class="info"></div>
                     </div>
@@ -282,7 +278,6 @@
         <label  class="col-sm-1 control-label">车辆外观：</label>
         <div class="formControls col-sm-11">
             <div class="uploder-container">
-                <p>您可以使用截屏工具截屏后，在窗口ctrl+V粘贴来上传图片</p>
                 <div  class="cxuploder">
                     <div class="queueList">
                         <div class="placeholder">
@@ -305,7 +300,6 @@
         <label  class="col-sm-1 control-label">合同信息：</label>
         <div class="formControls col-sm-11">
             <div class="uploder-container">
-                <p>您可以使用截屏工具截屏后，在窗口ctrl+V粘贴来上传图片</p>
                 <div  class="cxuploder">
                     <div class="queueList">
                         <div class="placeholder">
@@ -323,159 +317,240 @@
             </div>
         </div>
     </div>
-    <div class="form-group" style="padding: 20px">
-        <label  class="col-sm-1 control-label">入库视频：</label>
-        <div class="formControls col-sm-11">
-            <div class="main">
-                <div class="contentdiv" >
-                    <div class="rightbody">
-                        <div class="rightwhite">
-                            <div class="rightcont">
-                                <div class="rightcontent">
-                                    <div class="rightcontentdiv">
-                                        <table border="0" cellpadding="0" cellspacing="0" class="rightconttable">
-                                            <tr class="tabletitle">
-                                                <td>上传</td><td>视频预览</td><td>缩略图</td><td>视频时长</td><td>编辑</td>
-                                            </tr>
-                                            <tr class="tablelist">
-                                                <form class="frm" action="" method="post" enctype="multipart/form-data">
-                                                    <td>
-                                                        <a href="javascript:;" class="file" style="margin-left:-2px;">上传视频<input type="file" name="video" /></a>
-                                                        <div class="video_area" style="display:none;"></div>
-                                                        <input type="hidden" class="img_area" name="img" />
-                                                        <input type="hidden" class="time_long" name="time_long" />
-                                                    </td>
-                                                    <td><a href="javascript:;" class="yulan"><img src="video/images/playbtn.png" /></a></td>
-                                                    <td class="img_show"></td>
-                                                    <td><input type="text" class="time_long" value="0" readonly style="width:60px;border:0;" /> 秒</td>
-                                                    <td><input value="发布" type="button" class="publishbtn sub" /></td>
-                                                </form>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+    <!--<div class="form-group" style="padding: 20px">-->
+        <!--<label  class="col-sm-1 control-label">入库视频：</label>-->
+        <!--<div class="formControls col-sm-11">-->
+            <!--<div class="main">-->
+                <!--<div class="contentdiv" >-->
+                    <!--<div class="rightbody">-->
+                        <!--<div class="rightwhite">-->
+                            <!--<div class="rightcont">-->
+                                <!--<div class="rightcontent">-->
+                                    <!--<div class="rightcontentdiv">-->
+                                        <!--<table border="0" cellpadding="0" cellspacing="0" class="rightconttable">-->
+                                            <!--<tr class="tabletitle">-->
+                                                <!--<td>上传</td><td>视频预览</td><td>缩略图</td><td>视频时长</td><td>编辑</td>-->
+                                            <!--</tr>-->
+                                            <!--<tr class="tablelist">-->
+                                                <!--<form class="frm" action="" method="post" enctype="multipart/form-data">-->
+                                                    <!--<td>-->
+                                                        <!--<a href="javascript:;" class="file" style="margin-left:-2px;">上传视频<input type="file" name="video" /></a>-->
+                                                        <!--<div class="video_area" style="display:none;"></div>-->
+                                                        <!--<input type="hidden" class="img_area" name="img" />-->
+                                                        <!--<input type="hidden" class="time_long" name="time_long" />-->
+                                                    <!--</td>-->
+                                                    <!--<td><a href="javascript:;" class="yulan"><img src="video/images/playbtn.png" /></a></td>-->
+                                                    <!--<td class="img_show"></td>-->
+                                                    <!--<td><input type="text" class="time_long" value="0" readonly style="width:60px;border:0;" /> 秒</td>-->
+                                                    <!--<td><input value="发布" type="button" class="publishbtn sub" /></td>-->
+                                                <!--</form>-->
+                                            <!--</tr>-->
+                                        <!--</table>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="form-group" style="padding: 20px">-->
+        <!--<label  class="col-sm-1 control-label">全款车交接视频：</label>-->
+        <!--<div class="formControls col-sm-11">-->
+            <!--<div class="main">-->
+                <!--<div class="contentdiv" >-->
+                    <!--<div class="rightbody">-->
+                        <!--<div class="rightwhite">-->
+                            <!--<div class="rightcont">-->
+                                <!--<div class="rightcontent">-->
+                                    <!--<div class="rightcontentdiv">-->
+                                        <!--<table border="0" cellpadding="0" cellspacing="0" class="rightconttable">-->
+                                            <!--<tr class="tabletitle">-->
+                                                <!--<td>上传</td><td>视频预览</td><td>缩略图</td><td>视频时长</td><td>编辑</td>-->
+                                            <!--</tr>-->
+                                            <!--<tr class="tablelist">-->
+                                                <!--<form class="frm" action="" method="post" enctype="multipart/form-data">-->
+                                                    <!--<td>-->
+                                                        <!--<a href="javascript:;" class="file" style="margin-left:-2px;">上传视频<input type="file" name="video" /></a>-->
+                                                        <!--<div class="video_area" style="display:none;"></div>-->
+                                                        <!--<input type="hidden" class="img_area" name="img" />-->
+                                                        <!--<input type="hidden" class="time_long" name="time_long" />-->
+                                                    <!--</td>-->
+                                                    <!--<td><a href="javascript:;" class="yulan"><img src="video/images/playbtn.png" /></a></td>-->
+                                                    <!--<td class="img_show"></td>-->
+                                                    <!--<td><input type="text" class="time_long" value="0" readonly style="width:60px;border:0;" /> 秒</td>-->
+                                                    <!--<td><input value="发布" type="button" class="publishbtn sub" /></td>-->
+                                                <!--</form>-->
+                                            <!--</tr>-->
+                                        <!--</table>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+        <div class="form-group">
+            <label>入库视频：</label>
+            <div class="videoUpfile">
+                <input type="file" name="avatarVideo" class="avatarVideo"><a class="btn deleteAvatarVideo" href="javascript:;" rel="external nofollow" rel="external nofollow" >删除</a>
+                <div class="videoMaterials">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                            <span class="sr-only">0% Complete</span>
                         </div>
                     </div>
+                    <div class="files"></div>
+                    <div class="showimg"></div>
+                    <input type="hidden" value="" name="video_id[]">
+                    <p style="color: #b92c28" class="img_upload_info"></p>
+                </div>
+            </div>
+            <div class="videoUpfile">
+                <label>全款车交接视频：</label>
+                <input type="file" name="avatarVideo" class="avatarVideo"><a class="btn deleteAvatarVideo" href="javascript:;" rel="external nofollow" rel="external nofollow" >删除</a>
+                <div class="videoMaterials">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                            <span class="sr-only">0% Complete</span>
+                        </div>
+                    </div>
+                    <div class="files"></div>
+                    <div class="showimg"></div>
+                    <input type="hidden" value="" name="video_id[]">
+                    <p style="color: #b92c28" class="img_upload_info"></p>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="form-group" style="padding: 20px">
-        <label  class="col-sm-1 control-label">全款车交接视频：</label>
-        <div class="formControls col-sm-11">
-            <div class="main">
-                <div class="contentdiv" >
-                    <div class="rightbody">
-                        <div class="rightwhite">
-                            <div class="rightcont">
-                                <div class="rightcontent">
-                                    <div class="rightcontentdiv">
-                                        <table border="0" cellpadding="0" cellspacing="0" class="rightconttable">
-                                            <tr class="tabletitle">
-                                                <td>上传</td><td>视频预览</td><td>缩略图</td><td>视频时长</td><td>编辑</td>
-                                            </tr>
-                                            <tr class="tablelist">
-                                                <form class="frm" action="" method="post" enctype="multipart/form-data">
-                                                    <td>
-                                                        <a href="javascript:;" class="file" style="margin-left:-2px;">上传视频<input type="file" name="video" /></a>
-                                                        <div class="video_area" style="display:none;"></div>
-                                                        <input type="hidden" class="img_area" name="img" />
-                                                        <input type="hidden" class="time_long" name="time_long" />
-                                                    </td>
-                                                    <td><a href="javascript:;" class="yulan"><img src="video/images/playbtn.png" /></a></td>
-                                                    <td class="img_show"></td>
-                                                    <td><input type="text" class="time_long" value="0" readonly style="width:60px;border:0;" /> 秒</td>
-                                                    <td><input value="发布" type="button" class="publishbtn sub" /></td>
-                                                </form>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <button type="button" class="btn btn-block btn-info" onclick="entryInfo()">录入</button>
+    </form>
     </section>
 </div>
 {/block}
 {block name='script'}
-<script type="text/javascript" src="/webuploader/webuploader.min.js"></script>
-<script type="text/javascript" src="/uploadJs/redeem.js"></script>
-<script type="text/javascript" src="/uploadJs/appear.js"></script>
-<script type="text/javascript" src="/uploadJs/card.js"></script>
-<script type="text/javascript" src="/uploadJs/cert.js"></script>
-<script type="text/javascript" src="/uploadJs/contract.js"></script>
-<script type="text/javascript" src="/uploadJs/sell.js"></script>
 <script type="text/javascript" src="video/js/jquery-1.7.2.min.js"></script>
+<script src="UploadVideo/js/jquery.fileupload.js"></script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
 <script type="text/javascript" src="video/js/layer/layer.js"></script>
+<script type="text/javascript" src="date/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="date/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script>
-    $(function(){
-        //发布
-        $('.sub').live('click',function(){
-            var frm = $('.frm');
-            var file = $('input[name=file]').val();
-            var img = $('input[name=img]').val();
-            if(img!=''){
-                frm.submit();
+    function entryInfo(){
+        $.post("{:url('admin/index/entryInfo')}",$('#entryForm').serialize(),function(result){
+            if(result.status){
+                location.reload();
             }else{
-                alert('请在视频上传2s后点击发布，请再次点击');
+                console.log(result);
             }
-        });
-
-        //预览
-        $(".yulan").click(function(){
-            var files = $('input[name=video]').prop('files'),
-                videoURL = null,
-                windowURL = window.URL || window.webkitURL;
-            if(files && files[0]){
-                videoURL = windowURL.createObjectURL(files[0]);
-
-                layer.open({
-                    type:1,
-                    title:'视频预览',
-                    area:['800px','500px'],
-                    content:'<video src="'+videoURL+'" controls="controls" autoplay="autoplay" style="margin-top:10px;margin-left:14px;"></video>'
-                });
-            }
-        });
-
-        //生成缩略图
-        $('input[name=video]').change(function(){
-            var obj = $(this);
-            var files = this.files,
-                videoURL = null,
-                windowURL = window.URL || window.webkitURL;
-            if(files && files[0]){
-                videoURL = windowURL.createObjectURL(files[0]);
-                $('.video_area').html('<video id="myvideo" src="'+videoURL+'" controls="controls" autoplay="autoplay"></video>');
-
-                //截取视频2s时的画面作为缩略图
-                setTimeout(function(){
-                    createIMG(obj);
-                    //获取视频时长秒数(向下取整)
-                    var time = Math.floor($("#myvideo")[0].duration);
-                    $('.time_long').val(time);
-                }, 2000);
-            }
-        });
-    })
-    var createIMG = function(obj){
-        var scale = 0.3,
-            video = $('.video_area').find('video')[0],
-            canvas = document.createElement("canvas"),
-            canvasFill = canvas.getContext('2d');
-        canvas.width = video.videoWidth * scale;
-        canvas.height = video.videoHeight * scale;
-        canvasFill.drawImage(video,0,0,canvas.width,canvas.height);
-
-        var src = canvas.toDataURL("video/image/jpeg");
-        $('.img_area').val(src);
-        $('.img_show').html('<img src="'+src+'" style="width:100px;height:80px;" />');
+        },'json');
     }
+    $('.form_date').datetimepicker({
+        //年月日
+        format: 'yyyy-mm-dd',
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+    //上传视频
+
+    $(".avatarVideo").change(function() {
+        var _this = $(this);
+        _this.wrap("<form class='fileUploadeVideo' action='{：url(`admin/index/entryInfo`)}' method='post' enctype='multipart/form-data'></form>");
+        _this.parents('.fileUploadeVideo').ajaxSubmit({
+            dataType: 'json',
+            beforeSend: function () {
+                $(".progress").show();
+            },
+            uploadProgress: function (event, position, total, percentComplete) {
+                var percentVal = percentComplete + '%';
+                _this.parents('.videoUpfile').find(".progress-bar").width(percentComplete + '%');
+                _this.parents('.videoUpfile').find(".progress-bar").html(percentVal);
+                _this.parents('.videoUpfile').find(".sr-only").html(percentComplete + '%');
+            },
+            success: function (data) {
+                if (data.code == 100) {
+                    _this.parents('.videoUpfile').find(".files").html("文件名: " + data.video_title);
+                    _this.parents('.videoUpfile').find("input[type=hidden]").val(data.video_id);
+                    alert("上传成功!");
+                } else {
+                    alert("上传失败");
+                }
+            },
+            error: function () {
+                alert("上传失败");
+            }
+        });
+    });
+//    $(function(){
+//        //发布
+//        $('.sub').live('click',function(){
+//            var frm = $('.frm');
+//            var file = $('input[name=file]').val();
+//            var img = $('input[name=img]').val();
+//            if(img!=''){
+//                frm.submit();
+//            }else{
+//                alert('请在视频上传2s后点击发布，请再次点击');
+//            }
+//        });
+//
+//        //预览
+//        $(".yulan").click(function(){
+//            var files = $('input[name=video]').prop('files'),
+//                videoURL = null,
+//                windowURL = window.URL || window.webkitURL;
+//            if(files && files[0]){
+//                videoURL = windowURL.createObjectURL(files[0]);
+//                layer.open({
+//                    type:1,
+//                    title:'视频预览',
+//                    area:['800px','500px'],
+//                    content:'<video src="'+videoURL+'" controls="controls" autoplay="autoplay" style="margin-top:10px;margin-left:14px;"></video>'
+//                });
+//            }
+//        });
+//
+//        //生成缩略图
+//        $('input[name=video]').change(function(){
+//            var obj = $(this);
+//            var files = this.files,
+//                videoURL = null,
+//                windowURL = window.URL || window.webkitURL;
+//            if(files && files[0]){
+//                videoURL = windowURL.createObjectURL(files[0]);
+//                $('.video_area').html('<video id="myvideo" src="'+videoURL+'" controls="controls" autoplay="autoplay"></video>');
+//
+//                //截取视频2s时的画面作为缩略图
+//                setTimeout(function(){
+//                    createIMG(obj);
+//                    //获取视频时长秒数(向下取整)
+//                    var time = Math.floor($("#myvideo")[0].duration);
+//                    $('.time_long').val(time);
+//                }, 2000);
+//            }
+//        });
+//    })
+//    var createIMG = function(obj){
+//        var scale = 0.3,
+//            video = $('.video_area').find('video')[0],
+//            canvas = document.createElement("canvas"),
+//            canvasFill = canvas.getContext('2d');
+//        canvas.width = video.videoWidth * scale;
+//        canvas.height = video.videoHeight * scale;
+//        canvasFill.drawImage(video,0,0,canvas.width,canvas.height);
+//
+//        var src = canvas.toDataURL("video/image/jpeg");
+//        $('.img_area').val(src);
+//        $('.img_show').html('<img src="'+src+'" style="width:100px;height:80px;" />');
+//    }
     //车辆状态
 //    $(document).ready(function() {
 //        $('input[type=radio][name=status]').change(function() {

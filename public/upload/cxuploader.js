@@ -1,6 +1,5 @@
 
     jQuery(function() {
-
     	uploader = new Array();//创建 uploader数组
     	// 优化retina, 在retina下这个值是2
         var ratio = window.devicePixelRatio || 1,
@@ -68,7 +67,7 @@
 
                 chunked: true,//是否分片处理大文件的上传
                             
-                server: '',//上传地址
+                server: "{:url('admin/index/imgInfo')}",//上传地址
                 
                 fileNumLimit: 40,//一次最多上传文件个数
                 
@@ -105,10 +104,7 @@
                 addFile( file,uploader[index],queue);
                 setState( 'ready' ,uploader[index],placeholder,queue,statusBar,jxfilePicker);
                 updateStatus('ready',info,fileCount,fileSize);
-    			
-            	
-                
-                
+
             };
     		//当文件被移除队列后触发。
             uploader[index].onFileDequeued = function( file ) {
@@ -120,8 +116,6 @@
                     updateStatus('pedding',info,fileCount,fileSize);
                 }              
                 removeFile( file );
-              
-	
             };
             
             uploader[index].on('uploadSuccess',function(file,reponse){
@@ -133,15 +127,11 @@
             //可以在这里附加额外上传数据
             
             uploader[index].on('uploadBeforeSend',function(object,data,header) {
-            	/*var tt=$("input[name='id']").val();
+            	var tt=$("input[name='id']").val();
             	data=$.extend(data,{
             		modelid:tt
-            		});*/
-
-
-                alert("上传前触发");
+            		});
             });
-    		
     	});
     	
     	
@@ -298,9 +288,5 @@
             } 
 
             info.html( text );
-        } 
-        
-        
-    	
-   
+        }
     });

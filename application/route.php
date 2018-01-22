@@ -14,3 +14,5 @@ use think\Route;
 Route::get('index','admin/Index/index');
 Route::get('entry','admin/Index/entry');
 Route::get('dataCount','admin/Index/dataCount');
+Route::post('entryInfo','admin/Index/entryInfo');
+Route::post('imgInfo','admin/Index/imgInfo');

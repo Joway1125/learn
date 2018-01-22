@@ -18,4 +18,14 @@ class Index extends Controller
     public function dataCount(){
         return view();
     }
+
+    public function entryInfo(){
+        $data = input('post.');
+        print_r($data);die;
+    }
+    //接受图片
+    public function imgInfo(){
+        $data = input('post.');
+        print_r($data);
+    }
 }
