@@ -25,7 +25,7 @@ class Index extends Controller
     }
     //接受图片
     public function imgInfo(){
-        $data = input('post.');
-        print_r($data);
+        $file = request()->file('file');
+        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploadImgs');
     }
 }

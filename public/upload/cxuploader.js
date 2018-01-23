@@ -61,13 +61,13 @@
                 },
 
                 // swf文件路径
-                //swf: '${ctxStatic}/webuploader-0.1.5/Uploader.swf',
+                swf: 'upload/webuploader/Uploader.swf',
 
                 disableGlobalDnd: true,//禁用浏览器的拖拽功能，否则图片会被浏览器打开
 
                 chunked: true,//是否分片处理大文件的上传
                             
-                server: "{:url('admin/index/imgInfo')}",//上传地址
+                server: "http://learn.com/imgInfo",//上传地址
                 
                 fileNumLimit: 40,//一次最多上传文件个数
                 
@@ -119,18 +119,22 @@
             };
             
             uploader[index].on('uploadSuccess',function(file,reponse){
-            	
-            	alert(reponse.msg);
+                //console.log(file)
+                // if (typeof($imgUrl)=="undefined") {
+                //     $imgUrl = '&img='+reponse.url;
+                // }else{
+                //     $imgUrl = $imgUrl+','+reponse.url
+                // }
             });
             
 
             //可以在这里附加额外上传数据
             
             uploader[index].on('uploadBeforeSend',function(object,data,header) {
-            	var tt=$("input[name='id']").val();
-            	data=$.extend(data,{
-            		modelid:tt
-            		});
+            	// var tt=$("input[name='id']").val();
+            	// data=$.extend(data,{
+            	// 	modelid:tt
+            	// 	});
             });
     	});
     	
