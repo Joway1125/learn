@@ -1,0 +1,172 @@
+{extend name="base" /}
+{block name="css"}
+<style type="text/css">
+    /* 触发弹窗图片的样式 */
+    #myImg {
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    #myImg:hover {opacity: 0.7;}
+
+    /* 弹窗背景 */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+    }
+
+    /* 图片 */
+    .modal-content {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+    }
+
+    /* 文本内容 */
+    #caption {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+        text-align: center;
+        color: #ccc;
+        padding: 10px 0;
+        height: 150px;
+    }
+
+    /* 添加动画 */
+    .modal-content, #caption {
+        -webkit-animation-name: zoom;
+        -webkit-animation-duration: 0.6s;
+        animation-name: zoom;
+        animation-duration: 0.6s;
+    }
+
+    @-webkit-keyframes zoom {
+        from {-webkit-transform:scale(0)}
+        to {-webkit-transform:scale(1)}
+    }
+
+    @keyframes zoom {
+        from {transform:scale(0)}
+        to {transform:scale(1)}
+    }
+
+    /* 关闭按钮 */
+    .close {
+        position: absolute;
+        top: 150px;
+        right: 350px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* 小屏幕中图片宽度为 100% */
+    @media only screen and (max-width: 700px){
+        .modal-content {
+            width: 100%;
+        }
+    }
+</style>
+{/block}
+{block name="main"}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+
+            <small>后台模板</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>首页</a></li>
+            <li class="active">数据统计</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content container-fluid">
+        <div class="box">
+            <div class="box-body">
+                <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                    <div class="row">
+                        <div class="col-sm-6"></div>
+                        <div class="col-sm-6"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                                <td width="350">
+                                    {foreach $imgData as $k=>$v}
+                                    <!-- 触发弹窗 - 图片改为你的图片地址 -->
+                                    <img id="myImg{$k}" src="{$v}"  height="100" width="100" onclick="myImg({$k})" download="">
+                                    <!-- 弹窗 -->
+                                    {/foreach}
+                                </td>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="myModal" class="modal">
+
+                        <!-- 关闭按钮 -->
+                        <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+
+                        <!-- 弹窗内容 -->
+                        <img class="modal-content" id="img01">
+
+                        <!-- 文本描述 -->
+                        <div id="caption"></div>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+    </section>
+    <!-- /.content -->
+</div>
+{/block}
+{block name='script'}
+<script>
+        function myImg(k){
+            // 获取弹窗
+            var modal = document.getElementById('myModal');
+            var id = 'myImg'+k+'';
+            // 获取图片插入到弹窗 - 使用 "alt" 属性作为文本部分的内容
+            var img = document.getElementById(id);
+            var modalImg = document.getElementById("img01");
+            var captionText = document.getElementById("caption");
+            img.onclick = function(){
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                captionText.innerHTML = this.alt;
+            }
+
+            // 获取 <span> 元素，设置关闭按钮
+            var span = document.getElementsByClassName("close")[0];
+
+            // 当点击 (x), 关闭弹窗
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+        }
+</script>
+{/block}

@@ -1,4 +1,7 @@
 {extend name="base" /}
+{block name="css"}
+<script type="text/javascript" src="date/css/bootstrap-datetimepicker.min.css"></script>
+{/block}
 {block name="main"}
     <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -67,19 +70,22 @@
                   <div class="input-group input-group-sm" style="padding: 20px">
                       <ul>
                           <li style="list-style-type: none">
+                          <form id="searchForm" method="post">
                               <table border="0" cellspacing="0" cellpadding="2">
                                   <tbody>
                                   <tr>
                                       <td>押车类型：</td>
                                       <td>
-                                          <select id="">
+                                          <select name="type">
+                                              <option  value="">全部</option>
                                               <option value="1">抵押</option>
                                               <option value="2">质押</option>
                                           </select>
                                       </td>
                                       <td>车辆状态：</td>
                                       <td>
-                                          <select >
+                                          <select name="status">
+                                              <option value="">全部</option>
                                               <option value="1">在押</option>
                                               <option value="2">已赎</option>
                                               <option value="2">已卖</option>
@@ -88,27 +94,40 @@
                                       </td>
                                       <td>地区：</td>
                                       <td>
-                                          <select name="type" id="type">
+                                          <select name="addressId">
                                               <option value="">全部</option>
                                               <option value="recharge">天津</option>
                                               <option value="recharge">内蒙古</option>
                                           </select>
                                       </td>
                                       <td>借款人姓名：</td>
-                                      <td><input type="text" value=""></td>
+                                      <td><input type="text" name="name" value=""></td>
                                   </tr>
                                   <tr>
                                       <td>车牌号：</td>
-                                      <td><input type="text" id="username" value=""></td>
+                                      <td><input type="text" name="carNum" value=""></td>
                                       <td>开始时间：</td>
-                                      <td><input type="text" id="start_ts" value=""></td>
+                                      <td>
+                                          <div class="input-group date form_date " >
+                                              <input class="form-control" size="16" name="start_ts" type="text" value="" readonly>
+                                              <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                          </div>
+                                      </td>
                                       <td>结束时间：</td>
-                                      <td><input type="text" id="end_ts" value=""></td>
+                                      <td>
+                                          <div class="input-group date form_date " >
+                                              <input class="form-control" size="16" name="end_ts" type="text" value="" readonly>
+                                              <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                          </div>
+                                      </td>
                                       <td><button type="button" class="btn btn-block btn-success">导出表格</button></td>
-                                      <td><button type="button" class="btn btn-block btn-info">查询</button></td>
+                                      <td><button type="button" class="btn btn-block btn-info" onclick="search()">查询</button></td>
                                   </tr>
                                   </tbody>
                               </table>
+                          </form>
                           </li>
                       </ul>
                   </div>
@@ -121,7 +140,7 @@
                     <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">编号</th>
                     <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">地区</th>
                     <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">借款人姓名</th>
-                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">车辆类型</th>
+                    <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">车辆型号</th>
                     <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">押车类型</th>
                     <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">车辆状态</th>
                     <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending">借款金额</th>
@@ -132,32 +151,23 @@
                 </tr>
                 </thead>
                 <tbody>
+                {foreach $cars as $car}
                 <tr role="row" class="odd">
-                  <td class="sorting_1">1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
-                  <td>6</td>
-                  <td>7</td>
-                  <td>8</td>
-                  <td>9</td>
-                  <td>10</td>
-                  <td>11</td>
+                  <td class="sorting_1">{$car.id}</td>
+                  <td>{$car.address}</td>
+                  <td>{$car.name}</td>
+                  <td>{$car.modelNum}</td>
+                  <td>{if $car.type == 1}质押{elseif $car.type == 2}抵押{/if}</td>
+                  <td>{if $car.status == 1}在押{elseif $car.status == 2}已赎{elseif $car.status == 3}已卖{elseif $car.status == 4}{$car.statusNote}{/if}</td>
+                  <td>{$car.borrowMoney}</td>
+                  <td>{$car.interest_first}</td>
+                  <td>{$car.totalInterest}</td>
+                  <td>{$car.create_time}</td>
+                    <td><a href="{:url('admin/index/edit',['id'=>$car.id])}" type="button" class="btn btn-success">编辑信息</a>
+                        <a href="{:url('admin/index/imgData',['id'=>$car.id])}" type="button" class="btn btn-primary">查看详情</a>
+                        <a href="{:url('admin/index/interest',['id'=>$car.id])}" type="button" class="btn btn-info">添加利息</a>
                 </tr>
-                <tr role="row" class="even">
-                    <td class="sorting_1">1</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>4</td>
-                    <td>5</td>
-                    <td>6</td>
-                    <td>7</td>
-                    <td>8</td>
-                    <td>9</td>
-                    <td>10</td>
-                    <td>11</td>
-                </tr>
+                {/foreach}
                 </tbody>
                 <tfoot>
                 <tr><th rowspan="1" colspan="1">编号</th><th rowspan="1" colspan="1">地区</th><th rowspan="1" colspan="1">借款人姓名</th><th rowspan="1" colspan="1">车辆类型</th><th rowspan="1" colspan="1">押车类型</th><th rowspan="1" colspan="1">车辆状态</th><th rowspan="1" colspan="1">借款金额</th><th rowspan="1" colspan="1">当月利息</th><th rowspan="1" colspan="1">累计利息</th><th rowspan="1" colspan="1">入库日期</th><th rowspan="1" colspan="1">操作</th></tr>
@@ -168,4 +178,33 @@
     </section>
     <!-- /.content -->
   </div>
+{/block}
+{block name='script'}
+<script type="text/javascript" src="date/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="date/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script>
+    $('.form_date').datetimepicker({
+        //年月日
+        format: 'yyyy-mm-dd',
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+    });
+    function search(){
+        $.post("{:url('admin/Index/index')}",$('#searchForm').serialize(),function(result){
+            if(result){
+                for(var i=0;i<result.length;i++){
+
+                }
+            }else{
+                console.log(result);
+            }
+        },'json')
+    }
+</script>
 {/block}

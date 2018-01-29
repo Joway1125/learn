@@ -1,0 +1,93 @@
+{extend name="base" /}
+{block name="main"}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+
+            <small>后台模板</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>首页</a></li>
+            <li class="active">数据统计</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content container-fluid">
+        <div class="box">
+            <div class="box-header" >
+                <h3 class="box-title">数据统计</h3>
+            </div>
+            <div class="box-body">
+                <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                    <div class="row">
+                        <div class="col-sm-6"></div>
+                        <div class="col-sm-6"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                    <thead>
+                    <tr role="row">
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending"></th>
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">金额</th>
+                        <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending">时间</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {volist name="interestData" id="vo" empty="$empty" }
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">利息</td>
+                            <td>{$vo.interestValue}</td>
+                            <td>{$vo.create_time}</td>
+                        </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+                <input type="button" value="增加" id="addTable"/>
+                <input type="button" value="删除" id="deleteTable"/>
+                <form id="addInterestForm" method="post">
+                    <table id="table1"></table>
+                    <input type="hidden" name="id" value="{$id}">
+                    <button type="button" class="btn btn-primary" onclick="addInterest()">提交</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+{/block}
+{block name='js'}
+<script>
+    $(document).ready(function(){
+        $("#addTable").click(function(){
+            var tr="<tr><td><input type='checkbox' name='check'/>"+
+                "</td><td>利息</td><td><input type='text' name='addInterest[]'></td></tr>";
+            $("#table1").append(tr);
+
+        });
+
+        $("#deleteTable").click(function(){
+            var check = document.getElementsByName("check");
+            for(var i=0;i<check.length;i++){
+                if(check[i].checked){
+                    document.getElementById('table1').deleteRow(i);
+                    i--;
+                }
+            }
+        })
+    })
+
+    function addInterest(){
+        $.post("{:url('admin/index/addInterest')}",$('#addInterestForm').serialize(),function (result) {
+            if(result.status){
+                alert(result.msg);
+                location.reload();
+            }else{
+                console.log(result);
+            }
+        },'json');
+    }
+</script>
+{/block}

@@ -1,6 +1,6 @@
 {extend name="base" /}
 {block name="css"}
-<script type="text/javascript" src="date/css/bootstrap-datetimepicker.min.css"></script>
+<script type="text/javascript" src="/date/css/bootstrap-datetimepicker.min.css"></script>
 <link href="/admin/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css" />
 {/block}
 {block name="main"}
@@ -13,143 +13,153 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i>首页</a></li>
-            <li class="active">车辆管理</li>
+            <li class="active">车辆编辑</li>
         </ol>
     </section>
     <!-- Main content -->
-    <form class="content container-fluid" id="entryForm" enctype="multipart/form-data" method="post">
-    <div class="box-body">
-        <div class="form-group" style="padding: 20px">
-            <label class="col-sm-1 control-label">押车类型：</label>
-            <div class="col-sm-11">
-                <label><input name="type" type="radio" value="1"  checked="checked"/>质押 </label>
-                <label><input name="type" type="radio" value="2" />抵押 </label>
+    <form class="content container-fluid" id="editForm" enctype="multipart/form-data" method="post">
+        <div class="box-body">
+            <div class="form-group" style="padding: 20px">
+                <label class="col-sm-1 control-label">押车类型：</label>
+                <div class="col-sm-11">
+                    <label><input name="type" type="radio" value='1' {if $data.type == 1}  checked="checked" {/if} />质押 </label>
+                    <label><input name="type" type="radio" value='2' {if $data.type == 2}  checked="checked" {/if} />抵押 </label>
+                </div>
             </div>
-        </div>
-        <h3 style="text-align: left"><font color="blue"> 借款人信息</font></h3>
-        <div class="form-group" style="padding: 20px">
-            <label class="col-sm-1 control-label">所属分部：</label>
-            <div class="col-sm-1">
-                <select class="form-control" name="addressId">
-                    <option value="0">全部</option>
-                    <option value="1">天津</option>
-                    <option value="2">呼和浩特</option>
-                </select>
+            <h3 style="text-align: left"><font color="blue"> 借款人信息</font></h3>
+            <div class="form-group" style="padding: 20px">
+                <label class="col-sm-1 control-label">所属分部：</label>
+                <div class="col-sm-1">
+                    <select class="form-control" name="addressId">
+                        <option value="0">全部</option>
+                        <option value="1" {if $data.addressId =="1"}  selected="selected" {/if}> 天津 </option>
+                        <option value="2" {if $data.addressId =="2"}  selected="selected" {/if}> 呼和浩特 </option>
+                    </select>
+                </div>
             </div>
-        </div>
-        <div class="form-group" style="padding: 20px">
-            <label  class="col-sm-1 control-label">借款人姓名：</label>
-            <div class="col-sm-2">
-                <input type="text" class="form-control" name="name" placeholder="请输入借款人姓名">
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label">借款人姓名：</label>
+                <div class="col-sm-11">
+                    <label><input name="status" type="radio" value="1" {if $data.status == 1}  checked="checked" {/if}/>在押 </label>
+                    <label><input name="status" type="radio" value="2" {if $data.status == 2}  checked="checked" {/if} />已赎 </label>
+                    <label><input name="status" type="radio" value="3" {if $data.status == 3}  checked="checked" {/if} />已卖 </label>
+                    <label><input name="status" type="radio" value="4" {if $data.status == 4}  checked="checked" {/if} />其他 </label>
+                    <label><input type="text" class="form-control" name="statusNote" value="{$data.statusNote}"  placeholder="请输入其他信息备注"></label>
+                </div>
             </div>
-            <label  class="col-sm-1 control-label" style="text-align: right">姓名备注：</label>
-            <div class="col-sm-2">
-            <input type="text" name="note" class="form-control" placeholder="是否为车主">
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label">借款人姓名：</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" name="name" value="{$data.name}" placeholder="请输入借款人姓名">
+                </div>
+                <label  class="col-sm-1 control-label" style="text-align: right">姓名备注：</label>
+                <div class="col-sm-2">
+                    <input type="text" name="note" class="form-control" value="{$data.note}" placeholder="是否为车主">
+                </div>
             </div>
-        </div>
-        <div class="form-group" style="padding: 20px">
-            <label  class="col-sm-1 control-label">身份证号：</label>
-            <div class="col-sm-2">
-                <input type="text" name="cardID" class="form-control" placeholder="请输入身份证号">
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label">身份证号：</label>
+                <div class="col-sm-2">
+                    <input type="text" name="cardID" class="form-control" value="{$data.cardID}" placeholder="请输入身份证号">
+                </div>
+                <label  class="col-sm-1 control-label" style="text-align: right">手机号：</label>
+                <div class="col-sm-2">
+                    <input type="text" name="tel" class="form-control" value="{$data.tel}" placeholder="请输入手机号">
+                </div>
             </div>
-            <label  class="col-sm-1 control-label" style="text-align: right">手机号：</label>
-            <div class="col-sm-2">
-                <input type="text" name="tel" class="form-control" placeholder="请输入手机号">
-            </div>
-        </div>
-        <h3 style="text-align: left;padding:40px 0"><font color="blue">车辆信息</font></h3>
-        <div class="form-group" style="padding: 20px">
-            <label  class="col-sm-1 control-label">车辆型号：</label>
-            <div class="col-sm-2">
-                <input type="text" name="modelNum" class="form-control" placeholder="请输入车辆型号">
-            </div>
-            <label  class="col-sm-1 control-label" style="text-align: right">车辆备注：</label>
-            <div class="col-sm-2">
-                <input type="text" name="carNote" class="form-control" placeholder="是否有大本、为二押等情况">
-            </div>
+            <h3 style="text-align: left;padding:40px 0"><font color="blue">车辆信息</font></h3>
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label">车辆型号：</label>
+                <div class="col-sm-2">
+                    <input type="text" name="modelNum" class="form-control" value="{$data.modelNum}" placeholder="请输入车辆型号">
+                </div>
+                <label  class="col-sm-1 control-label" style="text-align: right">车辆备注：</label>
+                <div class="col-sm-2">
+                    <input type="text" name="carNote" class="form-control" value="{$data.carNote}" placeholder="是否有大本、为二押等情况">
+                </div>
 
-        </div>
-        <div class="form-group" style="padding: 20px">
-            <label  class="col-sm-1 control-label">车牌号：</label>
-            <div class="col-sm-2">
-                <input type="text" name="carNum" class="form-control" placeholder="请输入车牌号">
             </div>
-            <label  class="col-sm-1 control-label" style="text-align: right">上牌日期：</label>
-            <div class="col-sm-6">
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label">车牌号：</label>
+                <div class="col-sm-2">
+                    <input type="text" name="carNum" class="form-control" value="{$data.carNum}" placeholder="请输入车牌号">
+                </div>
+                <label  class="col-sm-1 control-label" style="text-align: right">上牌日期：</label>
+                <div class="col-sm-6">
                     <div class="input-group date form_date col-md-5" >
-                        <input class="form-control" size="16" name="date" type="text" value="" readonly>
+                        <input class="form-control" size="16" name="date" value="{$data.date}" type="text" value="" readonly>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                     </div>
                     <input type="hidden" id="dtp_input2" value="" /><br/>
+                </div>
+            </div>
+            <h3 style="text-align: left;padding:40px 0"><font color="blue">借款信息</font></h3>
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label" >收款人：</label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" name="payeeName" value="{$data.payeeName}" placeholder="默认同步借款人姓名">
+                </div>
+                <label  class="col-sm-1 control-label" style="text-align: right">借款金额：</label>
+                <div class="col-sm-2">
+                    <input type="text" name="borrowMoney" class="form-control" value="{$data.borrowMoney}" placeholder="请输入借款金额">
+                </div>
+            </div>
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label" >银行卡号：</label>
+                <div class="col-sm-2">
+                    <input type="text" name="cardNum" class="form-control" value="{$data.cardNum}" placeholder="请输入银行卡号">
+                </div>
+                <label  class="col-sm-1 control-label" style="text-align: right">开户行：</label>
+                <div class="col-sm-2">
+                    <input type="text" name="bankName" class="form-control" value="{$data.bankName}" placeholder="请输入开户行">
+                </div>
+            </div>
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label" >违章押金：</label>
+                <div class="col-sm-2">
+                    <input type="text" name="illegal" class="form-control" value="{$data.illegal}" placeholder="违章押金">
+                </div>
+                <label  class="col-sm-1 control-label" style="text-align: right">其他押金：</label>
+                <div class="col-sm-2">
+                    <input type="text" name="other" class="form-control" value="{$data.other}" placeholder="其他押金">
+                </div>
+            </div>
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label" >垫资金额：</label>
+                <div class="col-sm-2">
+                    <input type="text" name="mat" class="form-control" value="{$data.mat}" placeholder="请输入垫资金额">
+                </div>
+                <label  class="col-sm-1 control-label" style="text-align: right">利息1：</label>
+                <div class="col-sm-2">
+                    <input type="text" name="interest_first" class="form-control" value="{$data.interest_first}" placeholder="请输入利息金额">
+                </div>
+            </div>
+            <h3 style="text-align: left;padding:40px 0"><font color="blue">赎车信息</font></h3>
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label" >赎车本金：</label>
+                <div class="col-sm-2">
+                    <input type="text" name="redeem" class="form-control" value="{$data.redeem}" placeholder="请输入赎车本金">
+                </div>
+            </div>
+            <h3 style="text-align: left;padding:50px 0"><font color="blue">卖车信息</font></h3>
+            <div class="form-group" style="padding: 20px">
+                <label  class="col-sm-1 control-label">卖车本金：</label>
+                <div class="col-sm-2">
+                    <input type="text" name="sellMoney" class="form-control" value="{$data.sellMoney}" placeholder="请输入卖车本金">
+                </div>
+                <label  class="col-sm-1 control-label" style="text-align: right">卖车利润：</label>
+                <div class="col-sm-2">
+                    <input type="text" name="sellProfits" class="form-control" value="{$data.sellProfits}" placeholder="请输入卖车利润">
+                </div>
             </div>
         </div>
-        <h3 style="text-align: left;padding:40px 0"><font color="blue">借款信息</font></h3>
-        <div class="form-group" style="padding: 20px">
-            <label  class="col-sm-1 control-label" >收款人：</label>
-            <div class="col-sm-2">
-                <input type="text" class="form-control" name="payeeName" placeholder="默认同步借款人姓名">
-            </div>
-            <label  class="col-sm-1 control-label" style="text-align: right">借款金额：</label>
-            <div class="col-sm-2">
-                <input type="text" name="borrowMoney" class="form-control" placeholder="请输入借款金额">
-            </div>
-        </div>
-        <div class="form-group" style="padding: 20px">
-            <label  class="col-sm-1 control-label" >银行卡号：</label>
-            <div class="col-sm-2">
-                <input type="text" name="cardNum" class="form-control" placeholder="请输入银行卡号">
-            </div>
-            <label  class="col-sm-1 control-label" style="text-align: right">开户行：</label>
-            <div class="col-sm-2">
-                <input type="text" name="bankName" class="form-control" placeholder="请输入开户行">
-            </div>
-        </div>
-        <div class="form-group" style="padding: 20px">
-            <label  class="col-sm-1 control-label" >违章押金：</label>
-            <div class="col-sm-2">
-                <input type="text" name="illegal" class="form-control" placeholder="违章押金">
-            </div>
-            <label  class="col-sm-1 control-label" style="text-align: right">其他押金：</label>
-            <div class="col-sm-2">
-                <input type="text" name="other" class="form-control" placeholder="其他押金">
-            </div>
-        </div>
-        <div class="form-group" style="padding: 20px">
-            <label  class="col-sm-1 control-label" >垫资金额：</label>
-            <div class="col-sm-2">
-                <input type="text" name="mat" class="form-control" placeholder="请输入垫资金额">
-            </div>
-            <label  class="col-sm-1 control-label" style="text-align: right">利息1：</label>
-            <div class="col-sm-2">
-                <input type="text" name="interest_first" class="form-control" placeholder="请输入利息金额">
-            </div>
-        </div>
-        <h3 style="text-align: left;padding:40px 0"><font color="blue">赎车信息</font></h3>
-        <div class="form-group" style="padding: 20px">
-            <label  class="col-sm-1 control-label" >赎车本金：</label>
-            <div class="col-sm-2">
-                <input type="text" name="redeem" class="form-control" placeholder="请输入赎车本金">
-            </div>
-        </div>
-        <h3 style="text-align: left;padding:50px 0"><font color="blue">卖车信息</font></h3>
-        <div class="form-group" style="padding: 20px">
-            <label  class="col-sm-1 control-label">卖车本金：</label>
-            <div class="col-sm-2">
-                <input type="text" name="sellMoney" class="form-control" placeholder="请输入卖车本金">
-            </div>
-            <label  class="col-sm-1 control-label" style="text-align: right">卖车利润：</label>
-            <div class="col-sm-2">
-                <input type="text" name="sellProfits" class="form-control" placeholder="请输入卖车利润">
-            </div>
-        </div>
-    </div>
-    <h3 style="text-align: left;padding:40px 0"><font color="blue">图片录入</font></h3>
-    <div class="form-group" style="padding: 10px">
+        <h3 style="text-align: left;padding:40px 0"><font color="blue">图片录入</font></h3>
+        <div class="form-group" style="padding: 10px">
             <label  class="col-sm-1 control-label">转账贴图：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <div class="uploader-list-container">
-                    <input type="hidden" class="imgfirst" name="img">
+                    <input type="hidden" class="imgfirst" name="img" value="{$data.img}">
                     <div class="queueList">
                         <div id="dndArea" class="placeholder">
                             <div id="filePicker-2"></div>
@@ -168,18 +178,20 @@
                 <p style="color:red;margin-top:10px;">*上传图片尺寸为640px*640px</p>
             </div>
         </div>
-    <button type="button" class="btn btn-block btn-info" onclick="entryInfo()">录入</button>
+        <input type="hidden" name="create_time" value="{$data.create_time}">
+        <input type="hidden" name="id" value="{$data.id}">
+        <button type="button" class="btn btn-block btn-info" onclick="editInfo()">编辑</button>
     </form>
     </section>
 </div>
 {/block}
 {block name='script'}
-<script type="text/javascript" src="date/js/bootstrap-datetimepicker.js"></script>
-<script type="text/javascript" src="date/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript" src="/date/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="/date/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript" src="/admin/webuploader/0.1.5/webuploader.min.js"></script>
 <script>
-    function entryInfo(){
-        $.post("{:url('admin/index/entryInfo')}",$('#entryForm').serialize(),function(result){
+    function editInfo(){
+        $.post("{:url('admin/index/editInfo')}",$('#editForm').serialize(),function(result){
             if(result.status){
                 alert(result.msg);
                 location.reload();
@@ -362,7 +374,6 @@
             var arr = []; //定义全局数组
             uploader.on('uploadSuccess', function(file,response) {
                 var imgurl = response.file; //上传图片的路径
-                console.log(imgurl);
                 $(".imgfirst").each(function(){  //使用foreach 循环 地址
                     arr.push(imgurl);   //地址追加进数组
                 });
